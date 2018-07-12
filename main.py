@@ -20,7 +20,12 @@ class Scraper:
             for articles in html.find_all('article'):
                 for link in articles.find_all('a'):
                     video = self.get_page_html(link.get('href'))
-                    link_to_video = self.get_page_html(video.select('.s-video-detail iframe')[0].get('src'))
+                    video_page = self.get_page_html(video.select('.s-video-detail iframe')[0].get('src'))
+                    
+                    txt = video_page.body.children.pop().__str__()
+                    for s in txt.split():
+                        if s.find("-720p.mp4") != -1:
+                            print("hej")
 
 s = Scraper()
 s.get_episode_links()
